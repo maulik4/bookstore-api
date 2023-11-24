@@ -2,6 +2,10 @@
 
 This Laravel API serves as the backend for the Vue 3 bookstore application. It includes endpoints for both the Customer and Admin functionalities.
 
+## Installation Prerequisites
+
+Before setting up the Laravel API, make sure you have installed elastic search on your system. You can follow the instructions [here](https://www.digitalocean.com/community/tutorials/how-to-install-elasticsearch-logstash-and-kibana-elastic-stack-on-ubuntu-20-04) to install elastic search on your ubuntu system.
+
 ## Installation
 
 Follow these steps to set up and run the Laravel API locally:
@@ -25,19 +29,34 @@ Follow these steps to set up and run the Laravel API locally:
     ```
 5. Create an empty database for the application. In the `.env` file, add database information to allow Laravel to connect to the database.
 
-6. Migrate the database:
+6. Setup front end application url into your `.env` file:
+    ```bash
+    FRONTEND_URL=http://localhost:3000
+    ```
+
+6. To configure elastic search for the application, add the following to the `.env` file:
+    ```bash
+    ELASTICSEARCH_HOST=localhost
+    ``` 
+7. Migrate the database:
     ```bash
     php artisan migrate
     ```
-7. Seed the database:
+8. Seed the database:
     ```bash
     php artisan db:seed
     ```
-8. Start the local development server:
+
+9. Sync the elastic search index:
+    ```bash
+    php artisan sync:books-to-elasticsearch
+    ```
+
+10. Start the local development server:
     ```bash
     php artisan serve
     ```
-9. You can now access the server at http://localhost:8000
+11. You can now access the server at http://localhost:8000
 
 ## API Endpoints
 
@@ -150,5 +169,3 @@ GET /api/book-store
 ```http
 GET /api/book-store/${id}
 ```
-
-
