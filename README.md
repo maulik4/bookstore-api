@@ -13,6 +13,7 @@ Follow these steps to set up and run the Laravel API locally:
 1. Clone the repository:
    ```bash
    git clone https://github.com/maulik4/bookstore-api.git
+   cd bookstore-api
     ```
 2. Install dependencies:
     ```bash
@@ -51,12 +52,16 @@ Follow these steps to set up and run the Laravel API locally:
     ```bash
     php artisan sync:books-to-elasticsearch
     ```
+10. Create a symbolic link from `public/storage` to `storage/app/public`:
+    ```bash
+    php artisan storage:link
+    ```
 
-10. Start the local development server:
+11. Start the local development server:
     ```bash
     php artisan serve
     ```
-11. You can now access the server at http://localhost:8000
+12. You can now access the server at http://localhost:8000
 
 ## API Endpoints
 
