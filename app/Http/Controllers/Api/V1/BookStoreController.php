@@ -85,8 +85,8 @@ class BookStoreController extends Controller
                 'bool' => [
                     'must' => collect($validFilters)->map(function ($value, $field) {
                         return [
-                            'match' => [
-                                $field => $value,
+                            'wildcard' => [
+                                $field.'.keyword' => '*' . $value . '*',
                             ],
                         ];
                     })->values()->all(), // Convert the collection to array and re-index
@@ -96,8 +96,6 @@ class BookStoreController extends Controller
             'size' => $perPage,
         ];
 
-
-        // return $this->sendResponse($query);
         $resultSet = $this->elasticsearchService->search($index, $query);
 
         $data = [];
