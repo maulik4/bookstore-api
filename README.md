@@ -47,21 +47,16 @@ Follow these steps to set up and run the Laravel API locally:
     ```bash
     php artisan db:seed
     ```
-
-9. Sync the elastic search index:
-    ```bash
-    php artisan sync:books-to-elasticsearch
-    ```
-10. Create a symbolic link from `public/storage` to `storage/app/public`:
+9. Create a symbolic link from `public/storage` to `storage/app/public`:
     ```bash
     php artisan storage:link
     ```
 
-11. Start the local development server:
+10. Start the local development server:
     ```bash
     php artisan serve
     ```
-12. You can now access the server at http://localhost:8000
+11. You can now access the server at http://localhost:8000
 
 ## API Endpoints
 

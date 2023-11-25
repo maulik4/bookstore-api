@@ -8,18 +8,10 @@ use App\Http\Resources\BookResource;
 use App\Models\Book;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Storage;
-use App\Services\ElasticsearchService;
 use Image;
 
 class AdminBookController extends Controller
 {
-
-    protected $elasticsearchService;
-
-    public function __construct(ElasticsearchService $elasticsearchService)
-    {
-        $this->elasticsearchService = $elasticsearchService;
-    }
 
     /**
      * Display a listing of the resource.
@@ -54,10 +46,6 @@ class AdminBookController extends Controller
             'large' => $this->processImage($request->file('image'), 'book_image/large', 75, Book::$imageSize['large']),
         ];
         $book = Book::create($input);
-
-        // Create book index
-        $this->elasticsearchService->indexDocument('books', $book->id, $book->toArray());
-
         return $this->sendResponse(
             new BookResource($book),
             'Book Created Successfully',
@@ -91,8 +79,6 @@ class AdminBookController extends Controller
             $input = $request->all();
             $this->upsertImage($request, $book, $input);
             $book->update($input);
-            // Update book index
-            $this->elasticsearchService->updateDocument('books', $book->id, $book->toArray());
             return $this->sendResponse(
                 new BookResource($book),
                 'Book Updated Successfully',
@@ -114,8 +100,6 @@ class AdminBookController extends Controller
         try {
             $this->deleteImage($book);
             $book->delete();
-            //Delete book index
-            $this->elasticsearchService->deleteDocument('books', $book->id);
             return $this->sendResponse(
                 [],
                 'Book Deleted Successfully',
